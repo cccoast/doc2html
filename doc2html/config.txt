@@ -1,0 +1,3 @@
+[config]
+src_path=H:\python\workspace\general_office_of_state_council\doc2html\test\in
+des_path=H:\python\workspace\general_office_of_state_council\doc2html\test\out

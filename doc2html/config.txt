@@ -1,3 +1,3 @@
 [config]
-src_path=C:\Users\Administrator\Desktop\tmp\state_council_meetings\every_meeting
-des_path=C:\Users\Administrator\Desktop\tmp\state_council_meetings\every_meeting_html
+src_path=C:\Users\Administrator\Desktop\tmp\state_council_meetings\meetings
+des_path=C:\Users\Administrator\Desktop\tmp\state_council_meetings\meetings_html

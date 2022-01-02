@@ -1,9 +1,10 @@
 #coding:utf-8
-
 import ConfigParser as cp
 import misc
 import os
 from bs4 import BeautifulSoup
+
+should_process_title = True
 
 desired_type = ['docx','doc','txt']
 def is_desired_type(fname):
@@ -46,7 +47,8 @@ def doc2html(src_path,des_path):
                     misc.doc2html(doc_path, html_path)
                     scnt += 1
                     print scnt,'\t',os.path.join(cur_dir,ifile).decode('cp936')
-                    process_title(html_path)
+                    if should_process_title:
+                        process_title(html_path)
                 except:
                     ecnt += 1
                     print 'error! infile = ' , os.path.join(cur_dir,ifile).decode('cp936')

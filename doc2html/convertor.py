@@ -5,6 +5,13 @@ import misc
 import os
 from bs4 import BeautifulSoup
 
+desired_type = ['docx','doc','txt']
+def is_desired_type(fname):
+    for i in desired_type:
+        if fname.endswith(i):
+            return True
+    return False
+
 def process_title(html_path):
     fname = '.'.join(html_path.split('\\')[-1].split('.')[:-1]).decode('cp936')
     print html_path.decode('cp936')
@@ -23,7 +30,7 @@ def doc2html(src_path,des_path):
     src_path_length = len(src_path.split(os.path.sep))
     scnt,ecnt = 0,0
     for root_dir,sub_dir,files in os.walk(src_path):
-        infiles = [ifile for ifile in files if ( not ifile.startswith('~') and (ifile.endswith('docx') or ifile.endswith('doc')))]
+        infiles = [ifile for ifile in files if ( not ifile.startswith('~') and is_desired_type(ifile ))]
         cur_dir = os.path.sep.join((root_dir.split(os.sep)[src_path_length:]))
         des_dir = os.path.join(des_path,cur_dir)
         if not os.path.exists(des_dir):

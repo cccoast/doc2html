@@ -34,7 +34,7 @@ def doc2html(src_path,des_path,process_html = None):
         des_dir = os.path.join(des_path,cur_dir)
         if not os.path.exists(des_dir):
             os.makedirs(des_dir)
-        print cur_dir
+        print cur_dir.encode('cp936')
         for ifile in infiles:
             doc_path = os.path.join(root_dir,ifile)
             html_path = os.path.join(des_dir,'.'.join(ifile.split('.')[:-1]) + '.html')
@@ -44,12 +44,18 @@ def doc2html(src_path,des_path,process_html = None):
                 try:
                     misc.doc2html(doc_path, html_path)
                     scnt += 1
-                    print scnt,'\t',os.path.join(cur_dir,ifile)
+                    try:
+                        print scnt,'\t',ifile.encode('cp936')
+                    except:
+                        print scnt,'\t',ifile.encode('utf-8')
                     if process_html is not None:
                         process_html(html_path)
                 except:
                     ecnt += 1
-                    print 'error! infile = ' , os.path.join(cur_dir,ifile)
+                    try:
+                        print 'error! infile = ' , ifile.encode('cp936')
+                    except:
+                        print 'error! infile = ' , ifile.encode('utf-8')
     print 'successed conveted ' + str(scnt) + ' documents!' 
     print 'failed conveted ' + str(ecnt) + ' documents!' 
         

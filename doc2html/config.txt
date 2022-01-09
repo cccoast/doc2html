@@ -1,3 +1,3 @@
 [config]
-src_path=C:\Users\Administrator\Desktop\tmp\state_council_meetings\meetings
-des_path=C:\Users\Administrator\Desktop\tmp\state_council_meetings\meetings_html
+src_path=C:\Users\Administrator\Desktop\tmp\state_meeting\国务院常务会议
+des_path=C:\Users\Administrator\Desktop\tmp\国务院常务会议汇编

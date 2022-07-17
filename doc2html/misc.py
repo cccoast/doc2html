@@ -7,12 +7,12 @@ word = handler(('Word.Application'))
 word.Visible = False
 word.DisplayAlerts = False
 
-def doc2html(doc_path,html_path):
+def _doc2html(doc_path,html_path):
     doc = word.Documents.Open(doc_path)
     doc.SaveAs(html_path,10)
     doc.Close()
     
-def html2doc(html_path,doc_path):
+def _html2doc(html_path,doc_path):
     doc = word.Documents.Open(html_path)
     if doc_path.endswith('docx'):
         doc.SaveAs(doc_path,12)
@@ -24,5 +24,5 @@ def str2tag(s):
 
 def insert_tag(parent,tag_name,content):
     new_tag = str2tag('<' + tag_name + '>' + '</' + tag_name + '>').find(tag_name)
-    new_tag.string = content.decode('cp936') if not isinstance(content, unicode) else content 
+    new_tag.string = content.decode('cp936') if not isinstance(content, str) else content 
     parent.insert(0,new_tag)

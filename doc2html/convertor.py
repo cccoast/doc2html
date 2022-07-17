@@ -1,6 +1,4 @@
-#coding:utf-8
-import ConfigParser as cp
-import misc
+from .misc import _doc2html,insert_tag
 import os
 from bs4 import BeautifulSoup
 
@@ -12,20 +10,20 @@ def is_desired_type(fname):
     return False
 
 def process_title(html_path):
-    fname = '.'.join(html_path.split('\\')[-1].split('.')[:-1]).decode('cp936')
-    print html_path.decode('cp936')
-    with open(html_path,'r') as fin:
+    fname = '.'.join(html_path.split('\\')[-1].split('.')[:-1])
+    with open(html_path,'r',encoding='cp936') as fin:
         buff = ''.join(fin.readlines())
         soup = BeautifulSoup(buff,'lxml')
         head_tag = soup.find('head')
         title_tags = head_tag.find_all('title')
         for t in title_tags:
             t.extract()
-        misc.insert_tag(head_tag,'title', fname)
-    with open(html_path,'w') as fout:
-        fout.write(soup.encode('cp936'))    
+        insert_tag(head_tag,'title', fname)
+    with open(html_path,'w',encoding='cp936') as fout:
+        fout.write(soup.prettify(encoding='gb2312').decode('gb2312'))    
 
 def doc2html(src_path,des_path,process_html = None):
+    print(src_path,des_path)
     src_path_length = len(src_path.split(os.path.sep))
     scnt,ecnt = 0,0
     for root_dir,sub_dir,files in os.walk(src_path):
@@ -34,7 +32,7 @@ def doc2html(src_path,des_path,process_html = None):
         des_dir = os.path.join(des_path,cur_dir)
         if not os.path.exists(des_dir):
             os.makedirs(des_dir)
-        print cur_dir.encode('cp936')
+        print(cur_dir)
         for ifile in infiles:
             doc_path = os.path.join(root_dir,ifile)
             html_path = os.path.join(des_dir,'.'.join(ifile.split('.')[:-1]) + '.html')
@@ -42,27 +40,18 @@ def doc2html(src_path,des_path,process_html = None):
                 continue
             else:
                 try:
-                    misc.doc2html(doc_path, html_path)
+                    print(doc_path, html_path)
+                    _doc2html(doc_path, html_path)
                     scnt += 1
-                    try:
-                        print scnt,'\t',ifile.encode('cp936')
-                    except:
-                        print scnt,'\t',ifile.encode('utf-8')
+                    print(scnt,ifile)
                     if process_html is not None:
                         process_html(html_path)
-                except:
+                except Exception as e:
                     ecnt += 1
-                    try:
-                        print 'error! infile = ' , ifile.encode('cp936')
-                    except:
-                        print 'error! infile = ' , ifile.encode('utf-8')
-    print 'successed conveted ' + str(scnt) + ' documents!' 
-    print 'failed conveted ' + str(ecnt) + ' documents!' 
+                    print(e)
+                    print('error! infile = ' , ifile)
+    print('successed conveted ' + str(scnt) + ' documents!') 
+    print('failed conveted ' + str(ecnt) + ' documents!') 
         
-if __name__ == '__main__':
-    config = cp.ConfigParser()
-    config.read('config.txt')
-    src_path = config.get('config','src_path')
-    des_path = config.get('config','des_path')
-    doc2html(src_path,des_path,process_title)
+
     

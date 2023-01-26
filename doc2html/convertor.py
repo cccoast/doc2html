@@ -23,7 +23,7 @@ def process_title(html_path):
         fout.write(soup.prettify(encoding='gb2312').decode('gb2312'))    
 
 def doc2html(src_path,des_path,process_html = None):
-    print(src_path,des_path)
+    print((src_path,des_path))
     src_path_length = len(src_path.split(os.path.sep))
     scnt,ecnt = 0,0
     for root_dir,sub_dir,files in os.walk(src_path):
@@ -40,18 +40,18 @@ def doc2html(src_path,des_path,process_html = None):
                 continue
             else:
                 try:
-                    print(doc_path, html_path)
+                    print((doc_path, html_path))
                     _doc2html(doc_path, html_path)
                     scnt += 1
-                    print(scnt,ifile)
+                    print((scnt,ifile))
                     if process_html is not None:
                         process_html(html_path)
                 except Exception as e:
                     ecnt += 1
                     print(e)
-                    print('error! infile = ' , ifile)
-    print('successed conveted ' + str(scnt) + ' documents!') 
-    print('failed conveted ' + str(ecnt) + ' documents!') 
+                    print(('error! infile = ' , ifile))
+    print(('successed conveted ' + str(scnt) + ' documents!')) 
+    print(('failed conveted ' + str(ecnt) + ' documents!')) 
         
 
     
